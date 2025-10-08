@@ -10,9 +10,7 @@ class Student extends Model
     /** @use HasFactory<\Database\Factories\StudentFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'classroom_id'];
-
-    public function classroom()
+    public function classrooms()
     {
         return $this->belongsTo(Classroom::class, 'classroom_id');
     }

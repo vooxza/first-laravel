@@ -9,22 +9,20 @@
                 <tr>
                     <th class="border border-gray-600 px-4 py-2">No</th>
                     <th class="border border-gray-600 px-4 py-2">Name</th>
-                    <th class="border border-gray-600 px-4 py-2">Email</th>
+                    <th class="border border-gray-600 px-4 py-2">Subject Name</th>
+                    <th class="border border-gray-600 px-4 py-2">Phone</th>
                     <th class="border border-gray-600 px-4 py-2">Address</th>
-                    <th class="border border-gray-600 px-4 py-2">Kelas</th>
-                    <th class="border border-gray-600 px-4 py-2">Birthday</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($students as $student)
+                @foreach ($teachers as $teacher)
                     <tr>
                         <td class="border border-gray-600 px-4 py-2">{{ $loop->iteration }}</td>
-                        <td class="border border-gray-600 px-4 py-2">{{ $student->name }}</td>
-                        <td class="border border-gray-600 px-4 py-2">{{ $student->email }}</td>
-                        <td class="border border-gray-600 px-4 py-2">{{ $student->address }}</td>
-                        <td class="border border-gray-600 px-4 py-2">{{ $student->classrooms->name }}</td>
-                        <td class="border border-gray-600 px-4 py-2">{{ $student->birthday}}</td>
-
+                        <td class="border border-gray-600 px-4 py-2">{{ $teacher["name"] }}</td>
+                        <td class="border border-gray-600 px-4 py-2">{{ $teacher->subjects->name }}</td>
+                        <td class="border border-gray-600 px-4 py-2">{{ $teacher["phone"] }}</td>
+                        <td class="border border-gray-600 px-4 py-2">{{ $teacher["email"] }}</td>
+                        <td class="border border-gray-600 px-4 py-2">{{ $teacher["adress"] }}</td>
                     </tr>
                 @endforeach
             </tbody>
