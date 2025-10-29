@@ -10,6 +10,8 @@ class Student extends Model
     /** @use HasFactory<\Database\Factories\StudentFactory> */
     use HasFactory;
 
+    protected $with = ['classrooms'];
+
     public function classrooms()
     {
         return $this->belongsTo(Classroom::class, 'classroom_id');

@@ -12,7 +12,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::factory(10)->create();
+
+        $students = Student::with('classrooms')->get();
 
         return view('student', compact('students'), [
             'title' => 'Student'

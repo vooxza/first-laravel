@@ -17,3 +17,6 @@ Route::get('/guardian', [GuardianController::class, 'index'])->name('guardian');
 Route::get('/classroom', [ClassroomController::class, 'index'])->name('classroom');
 Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects');
 Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher');
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+})->name('admin');
