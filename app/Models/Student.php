@@ -9,10 +9,16 @@ class Student extends Model
 {
     /** @use HasFactory<\Database\Factories\StudentFactory> */
     use HasFactory;
+        protected $fillable = [
+        'name',
+        'email',
+        'address',
+        'classroom_id',
+    ];
 
-    protected $with = ['classrooms'];
+    protected $with = ['classroom'];
 
-    public function classrooms()
+    public function classroom()
     {
         return $this->belongsTo(Classroom::class, 'classroom_id');
     }

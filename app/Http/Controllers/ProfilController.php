@@ -6,20 +6,18 @@ use Illuminate\Http\Request;
 
 class ProfilController extends Controller
 {
-
-    public function index()
+    public function index() {
+           return view('profil' , [
+        'title' => 'Profil', 'nama' => 'nama', 'kelas' => 'kelas', 'sekolah' => 'sekolah'
+    ]);
+    }
+    public function adminIndex()
     {
-        $data = [
-            'nama' => 'Fabian Amadeus S.N',
+        return view('components.admin.profil', [
+            'title' => 'Profil Admin',
+            'nama' => 'Fabian Amadeus Singgih Nirwasita',
             'kelas' => 'XI PPLG 1',
-            'sekolah' => 'SMK Bisa Hebat'
-        ];
-
-        return view('profil', $data, [
-            'title' => 'Profil'
+            'sekolah' => 'SMK Raden Umar Said'
         ]);
     }
-
-
-    
 }

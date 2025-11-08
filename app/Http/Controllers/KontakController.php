@@ -6,14 +6,16 @@ use Illuminate\Http\Request;
 
 class KontakController extends Controller
 {
-    public function index()
+
+    public function index(){
+return view('kontak', ['title' => 'Kontak']);
+    }
+    public function adminIndex()
     {
-        $dataKontak = [
+        return view('components.admin.kontak', [
+            'title' => 'Kontak Admin',
             'email' => 'fasn004@gmail.com',
-            'nomor' => '0895421153020',
-        ];
-        return view('kontak', $dataKontak, [
-            'title' => 'Kontak'
+            'whatsapp' => '+62 895-4211-53020'
         ]);
     }
 }

@@ -1,31 +1,26 @@
 <x-layout>
     <x-slot:judul>{{ $title }}</x-slot:judul>
 
-    <div class="w-full max-w-4xl mx-auto p-6 rounded-lg">
-        <h1 class="text-2xl font-bold mb-6 text-center text-white">Jumlah Siswa per Kelas</h1>
-
-        <table class="w-full border border-gray-600 text-sm text-left text-white">
-            <thead class="bg-slate-700/50">
+    <div class="max-w-5xl mx-auto bg-gray-800/60 shadow-lg rounded-xl overflow-hidden mt-6 border border-gray-700/40">
+        <table class="min-w-full divide-y divide-gray-700">
+            <thead class="bg-gray-900/80">
                 <tr>
-                    <th class="border border-gray-600 px-4 py-2">No</th>
-                    <th class="border border-gray-600 px-4 py-2">Nama Kelas</th>
-                    <th class="border border-gray-600 px-4 py-2">Jumlah Siswa</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">No</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Classroom Name</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Students</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach ($classrooms->groupBy('name') as $className => $groupedClassrooms)
-                    @php
-                        $allStudents = $groupedClassrooms->flatMap(fn($class) => $class->students);
-                    @endphp
-                    <tr>
-                        <td class="border border-gray-600 px-4 py-2 text-center">{{ $loop->iteration }}</td>
-                        <td class="border border-gray-600 px-4 py-2 font-semibold ">{{ $className }}</td>
-                        <td class="border border-gray-600 px-4 py-2">
-                            <ul class="list-disc list-inside">
-                                @foreach ($allStudents as $student)
-                                    <li>{{ $student->name }}</li>
-                                @endforeach
-                            </ul>
+            <tbody class="bg-gray-800/70 divide-y divide-gray-700 text-gray-200">
+                @foreach ($classroom as $index => $name)
+                    <tr class="hover:bg-gray-700/60 transition duration-150">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $loop->iteration }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $name['name'] }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            @forelse ($name->students as $student)
+                                • {{ $student->name }}<br>
+                            @empty
+                                <span class="text-gray-500 italic">No students assigned</span>
+                            @endforelse
                         </td>
                     </tr>
                 @endforeach

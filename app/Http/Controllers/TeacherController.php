@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Teacher;
+use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
-      /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        
-        $teachers = Teacher::all();
-        return view('teacher', [
-            'title' => 'Teacher List',
-            'teachers' => $teachers
-        ]);
+      
+        $teacher = Teacher::all();
+        return view('teacher', ['title' => 'Teacher', 'teacher' => $teacher]);
     }
 
     /**

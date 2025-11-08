@@ -2,18 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Guardian;
 use Illuminate\Http\Request;
+use App\Models\Subject;
 
-class GuardianController extends Controller
+class AdminSubjectController extends Controller
 {
-    /**
+      /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $guardian = Guardian::all();
-        return view('guardian', ['title' => 'Guardian', 'guardian' => $guardian]);
+        $subject = Subject::all(); 
+        return view('subject', [
+            'title' => 'Subject', 
+            'subject' => $subject
+        ]);
+    }
+    public function adminIndex()
+    {
+        $subject = Subject::all();
+
+        // Mengarah ke resources/views/admin/subject.blade.php
+        return view('components.admin.subject', [ 
+            'title' => 'Data mata pelajaran (Admin)',
+            'subject' => $subject
+        ]);
     }
 
     /**
