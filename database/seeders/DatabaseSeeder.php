@@ -25,6 +25,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Subject::factory(5)->hasTeachers(1)->create();
-        Classroom::factory(5)->hasStudents(5)->create();
+        Classroom::factory(3)->hasStudents(10)->create();
     }
 }

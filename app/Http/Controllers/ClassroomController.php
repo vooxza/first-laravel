@@ -9,19 +9,10 @@ class ClassroomController extends Controller
 {
     public function index()
     {
-        $classroom = Classroom::all(); 
-        return view('classroom', [
-            'title' => 'Classroom', 
-            'classroom' => $classroom
-        ]);
-    }
-        public function adminIndex()
-    {
-        $classroom = Classroom::all();
+        $classroom = Classroom::with('students')->get();
 
-        // Mengarah ke resources/views/admin/classroom.blade.php
-        return view('components.admin.classroom', [ 
-            'title' => 'Data Classroom (Admin)',
+        return view('classroom', [
+            'title' => 'Classroom',
             'classroom' => $classroom
         ]);
     }

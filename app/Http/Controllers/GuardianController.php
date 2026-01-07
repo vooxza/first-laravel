@@ -13,7 +13,10 @@ class GuardianController extends Controller
     public function index()
     {
         $guardian = Guardian::all();
-        return view('guardian', ['title' => 'Guardian', 'guardian' => $guardian]);
+        return view('guardian', [
+            'title' => 'Guardian', 
+            'guardian' => $guardian
+        ]);
     }
 
     /**

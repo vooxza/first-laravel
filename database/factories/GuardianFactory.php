@@ -21,6 +21,7 @@ class GuardianFactory extends Factory
             'job' => $this->faker->randomElement(['Petani', 'Guru', 'Dokter', 'Karyawan', 'Wiraswasta']),
             'phone' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
+            'address' => $this->faker->address(),
         ];
     }
 }

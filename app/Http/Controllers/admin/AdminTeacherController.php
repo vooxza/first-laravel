@@ -12,42 +12,84 @@ class AdminTeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::with('subject')->get();
+        $subjects = Subject::doesntHave('teachers')->get();
 
         return view('components.admin.teacher', [
             'title' => 'Teacher List',
-            'teacher' => $teachers
+            'teacher' => $teachers,
+            'subject' => $subjects
         ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'subject_name' => 'required',
-            'subject_description' => 'nullable',
+            'name' => 'required|string|max:255',
+            'subject_id' => 'required|exists:subjects,id',
             'email' => 'required|email',
-            'phone' => 'required',
-            'address' => 'required',
+            'phone' => 'required|string',
+            'address' => 'required|string',
         ]);
 
-        // 1️⃣ Buat subject dulu
-        $subject = Subject::create([
-            'name' => $request->subject_name,
-            'description' => $request->subject_description ?? 'Belum ada deskripsi',
-        ]);
+        if (Teacher::where('subject_id', $request->subject_id)->exists()) {
+            return back()
+                ->with('error', 'Subject ini sudah diajar oleh guru lain!')
+                ->withInput();
+        }
 
-        // 2️⃣ Buat teacher dan isi subject_id dari subject yang baru dibuat
-        $teacher = Teacher::create([
+        Teacher::create([
             'name' => $request->name,
+            'subject_id' => $request->subject_id,
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
-            'subject_id' => $subject->id,
         ]);
 
-        // ✅ Tidak perlu buat Subject kedua atau pakai save()
-        // Relasi sudah otomatis terhubung lewat subject_id
+        return redirect()->route('admin.teacher.index')
+            ->with('success', 'Teacher berhasil ditambahkan!');
+    }
 
-        return redirect()->back()->with('success', 'Teacher dan Subject berhasil ditambahkan!');
+
+    public function update(Request $request, $id)
+    {
+        $teacher = Teacher::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'subject_id' => 'required|exists:subjects,id',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'address' => 'required|string',
+        ]);
+
+        $isUsedByOther = Teacher::where('subject_id', $request->subject_id)
+            ->where('id', '!=', $teacher->id)
+            ->exists();
+
+        if ($isUsedByOther) {
+            return back()
+                ->with('error', 'Subject ini sudah diajar oleh guru lain!')
+                ->withInput();
+        }
+
+        $teacher->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'subject_id' => $request->subject_id,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+
+        return redirect()->route('admin.teacher.index')
+            ->with('success', 'Teacher berhasil diupdate!');
+    }
+
+
+    public function destroy($id)
+    {
+        $teacher = Teacher::findOrFail($id);
+        $teacher->delete();
+
+        return redirect()->route('admin.teacher.index')->with('success', 'Teacher deleted successfully.');
     }
 }

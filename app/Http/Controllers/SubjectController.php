@@ -25,4 +25,23 @@ class SubjectController extends Controller
             'subject' => $subject
         ]);
     }
+    public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'teacher_id' => 'nullable|exists:teachers,id'
+    ]);
+
+    $subject = Subject::create([
+        'name' => $request->name,
+        'description' => $request->description,
+    ]);
+
+    if ($request->teacher_id) {
+        $subject->teachers()->attach($request->teacher_id);
+    }
+
+    return redirect()->route('subject.index')->with('success', 'Subject added!');
+}
 }

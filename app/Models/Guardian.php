@@ -13,6 +13,7 @@ class Guardian extends Model
         'name',
         'job',
         'email',
+        'phone',
         'address',
     ];
 }
